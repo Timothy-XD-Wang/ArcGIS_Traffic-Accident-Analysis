@@ -1,5 +1,6 @@
 # ArcGIS_Traffic-Accident-Analysis
 An Arcpy script used to determine traffic accidents involving pedestrians and its location and time in the City of Toronto. 
+The geodatabse contained Pedestrian Injuries.zip is the data used for this task. 
 This script allows the user to analyze when and where traffic accidents occur most frequently, in respect to the population and income of an area. 
 
 This tool involves setting the appropriate cordinate system to a Canada census tract feature class before adding and calculating necessary fields. 
