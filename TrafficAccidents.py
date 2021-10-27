@@ -1,9 +1,9 @@
 import arcpy as ap
 
-ws = ap.env.workspace = "C:/Student/A6Data/Pedestrian Injuries.gdb"
+ws = ap.env.workspace = "C:/Student/Pedestrian Injuries.gdb"
 ap.env.overwriteOutput = True
 
-CensusTracts = "C:/Student/A6Data/Pedestrian Injuries.gdb/Census/CensusTracts"
+CensusTracts = "C:/Pedestrian Injuries.gdb/Census/CensusTracts"
 # Creating new feature class with only census tracts from Toronto
 censusTractsToronto = ap.CreateFeatureclass_management(ws, "Toronto_CT")
 ap.Select_analysis(CensusTracts, censusTractsToronto, "CMANAME = 'Toronto'")
@@ -20,7 +20,7 @@ ap.AddField_management(proj_censusTractsToronto, "Area", "Double")
 # Populating "Area" field with values from "Shape_Area"
 ap.CalculateField_management(proj_censusTractsToronto, "Area", "!Shape_Area!")
 
-CensusData = "C:/Student/A6Data/Pedestrian Injuries.gdb/CensusData"
+CensusData = "C:/Student/Pedestrian Injuries.gdb/CensusData"
 # The fields "CTUID" from the projected feature class and "CT_ID" from CensusData are to be be joined.
 # CTUID and CT_ID have different data types so they cannot be joined directly, so a new interim field is created
 # The new "CTUID" text field in CensusData takes values from "CT_ID" field to allow joining with projected feature class
@@ -28,7 +28,7 @@ ap.AddField_management(CensusData, "CTUID", "Text")
 ap.CalculateField_management(CensusData, "CTUID", "!CT_ID!")
 ap.JoinField_management(proj_censusTractsToronto, "CTUID", CensusData, "CTUID", ["POP", "HHINC_MED"])
 
-PD = "C:/Student/A6Data/Pedestrian Injuries.gdb/Injuries/Pedestrians"
+PD = "C:/Student/Pedestrian Injuries.gdb/Injuries/Pedestrians"
 # Creating new Period field to be populated by time in the day
 ap.AddField_management(PD, "Period", "Text")
 # Populating Period field by adding time descriptions based on Hour field
@@ -69,17 +69,17 @@ with ap.da.UpdateCursor(PD, binaryFields) as cursor:
         cursor.updateRow(row)
 
 # Spatially joining Pedestrian and Toronto census tracts into one feature class
-outFC = "C:/Student/A6Data/Pedestrian Injuries.gdb/CT_Pedestrian_joined"
+outFC = "C:/Student/Pedestrian Injuries.gdb/CT_Pedestrian_joined"
 ap.SpatialJoin_analysis(PD, proj_censusTractsToronto, outFC)
 
 # Deleting fields from outFC that are unnecessary
 ap.DeleteField_management(outFC, ["Join_Count", "Target_FID", "Index_", "CMATYPE"])
 
 # Deleting intermediate feature classes
-ap.Delete_management("C:/Student/A6Data/Pedestrian Injuries.gdb/Toronto_CT")
-ap.Delete_management("C:/Student/A6Data/Pedestrian Injuries.gdb/Toronto_CT_NAD1983")
+ap.Delete_management("C:/Student/Pedestrian Injuries.gdb/Toronto_CT")
+ap.Delete_management("C:/Student/Pedestrian Injuries.gdb/Toronto_CT_NAD1983")
 
 # Converting joined CT & Pedestrian featureclass attribute table to Excel file
 ap.TableToExcel_conversion(outFC, "CT_Pedestrian_joined.xls")
-# Output Excel file stored in the "C:/Student/A6Data"
+
 
