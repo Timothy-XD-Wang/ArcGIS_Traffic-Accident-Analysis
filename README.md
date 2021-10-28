@@ -9,6 +9,6 @@ During the processing, data such as census tract population and mean household i
 
 Additionally, a table consisting of accidents involving pedestrians in Toronto must be processed to include time of day the accident occurs. 
 
-Once the groprocessing scripting for the Toronto census tract feature class and accidents table complete, the two are spatially joined.  
+Once the groprocessing tasks for the Toronto census tract feature class and accidents table are complete, the two are spatially joined.  
 
 The end result exports to an Excel table featuring information to faciliate the pedestrian accident analysis. 
