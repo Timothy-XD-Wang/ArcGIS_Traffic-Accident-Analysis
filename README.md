@@ -7,7 +7,7 @@ This tool involves setting the appropriate cordinate system to a Canada census t
 Census tracts from the City of Toronto are selected from the census tracts dataset and prepared for geoprocessing.
 During the processing, data such as census tract population and mean household income are calculated and added to Toronto census tracts. 
 
-Additionally, a table consisting of accidents involving pedestrians in Toronto must be processed to include time of day accident occurs. 
+Additionally, a table consisting of accidents involving pedestrians in Toronto must be processed to include time of day the accident occurs. 
 
 Once the groprocessing scripting for the Toronto census tract feature class and accidents table complete, the two are spatially joined.  
 
